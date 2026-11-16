@@ -1,0 +1,68 @@
+{
+  "name": "cyclopsmc-release-bot",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
+  "description": "A bot that comments on issues and pull requests once they are included in a release of a CyclopsMC mod.",
+  "author": "Ruben Taelman <rubensworks@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/CyclopsMC/ReleaseBot#readme",
+  "repository": "git@github.com:CyclopsMC/ReleaseBot.git",
+  "bugs": {
+    "url": "https://github.com/CyclopsMC/ReleaseBot/issues"
+  },
+  "main": "index.js",
+  "bin": {
+    "release-bot": "bin/release-bot.js"
+  },
+  "typings": "index",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "jest ${1}",
+    "test-watch": "jest ${1} --watch",
+    "lint": "ESLINT_USE_FLAT_CONFIG=true eslint .",
+    "build": "tsc",
+    "validate": "npm ls",
+    "prepare": "npm run build",
+    "start": "node bin/release-bot.js"
+  },
+  "pre-commit": [
+    "build",
+    "lint",
+    "test"
+  ],
+  "devDependencies": {
+    "@rubensworks/eslint-config": "^3.0.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^22.0.0",
+    "eslint": "^8.56.0",
+    "jest": "^30.0.0",
+    "pre-commit": "^2.0.0",
+    "ts-jest": "^29.0.0",
+    "typescript": "^6.0.0"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
+    ],
+    "testRegex": "(/test/.*|(\\.|/)(test|spec))\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "collectCoverage": true,
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    }
+  }
+}

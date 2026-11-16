@@ -1,0 +1,73 @@
+name: Release Bot
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Only report what would be done, without adding comments or labels'
+        type: boolean
+        default: true
+      not_before:
+        description: Ignore releases published before this date (defaults to the RELEASE_BOT_NOT_BEFORE variable)
+        type: string
+      lookback_days:
+        description: Ignore releases published more than this number of days ago
+        type: string
+        default: '14'
+      repositories:
+        description: 'Comma-separated repository names to limit to (defaults to the RELEASE_BOT_REPOSITORIES variable, or all repositories)'
+        type: string
+
+concurrency:
+  group: release-bot
+
+jobs:
+
+  release-bot:
+    # Skip until the GitHub App is configured
+    if: vars.RELEASE_BOT_CLIENT_ID != ''
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/cache@v6
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-release-bot-modules-${{ hashFiles('**/yarn.lock') }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 26.x
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Create GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.RELEASE_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_BOT_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+      - name: Run release bot
+        run: yarn run start
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+          RELEASE_BOT_ORGANIZATION: ${{ github.repository_owner }}
+          # Scheduled runs only add comments and labels once the RELEASE_BOT_LIVE variable is 'true'
+          RELEASE_BOT_DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && format('{0}', inputs.dry_run) || format('{0}', vars.RELEASE_BOT_LIVE != 'true') }}
+          RELEASE_BOT_NOT_BEFORE: ${{ inputs.not_before || vars.RELEASE_BOT_NOT_BEFORE }}
+          RELEASE_BOT_LOOKBACK_DAYS: ${{ inputs.lookback_days }}
+          RELEASE_BOT_REPOSITORIES: ${{ inputs.repositories || vars.RELEASE_BOT_REPOSITORIES }}
+
+  # Scheduled workflows in public repositories are disabled after 60 days without activity.
+  # Re-enabling this workflow via the API on each scheduled run resets that period.
+  keepalive:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Keep the scheduled workflow enabled
+        run: gh api --method PUT "repos/${{ github.repository }}/actions/workflows/release-bot.yml/enable"
+        env:
+          GH_TOKEN: ${{ github.token }}
