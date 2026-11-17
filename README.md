@@ -88,6 +88,8 @@ Each comment contains a hidden marker that lists the announced releases.
 This makes runs idempotent: a release is never announced twice on the same issue or pull request,
 and a later release (for example, for another Minecraft version) results in a new comment that only lists the new release.
 
+Requests to GitHub go through [Octokit](https://github.com/octokit/rest.js) with its [throttling plugin](https://github.com/octokit/plugin-throttling.js),
+which handles rate limits and waits a few seconds between comments.
 As a safety measure, a run that would post more than 50 comments does not post anything.
 If anything fails, the workflow run fails, and the job summary lists all errors.
 
@@ -128,7 +130,6 @@ The following environment variables can be used:
 | `RELEASE_BOT_LABEL` | `released` | The label to add. It is created if it does not exist yet. |
 | `RELEASE_BOT_MAX_COMMENTS` | `50` | The maximum number of comments in a single run. |
 | `RELEASE_BOT_CI_WORKFLOW` | `ci.yml` | The workflow that must succeed for a release before it is handled. |
-| `RELEASE_BOT_COMMENT_DELAY` | `1000` | The number of milliseconds to wait after each comment. |
 
 ## Development
 

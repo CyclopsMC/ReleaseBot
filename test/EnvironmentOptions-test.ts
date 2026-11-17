@@ -23,7 +23,6 @@ describe('getEnvironmentOptions', () => {
       label: { name: 'released', color: '0e8a16', description: 'Included in a published release' },
       maxComments: 50,
       ciWorkflow: 'ci.yml',
-      commentDelay: 1_000,
     });
   });
 
@@ -49,13 +48,12 @@ describe('getEnvironmentOptions', () => {
       RELEASE_BOT_DRY_RUN: 'false',
       RELEASE_BOT_NOT_BEFORE: '2026-11-16',
       RELEASE_BOT_LOOKBACK_DAYS: '7',
-      RELEASE_BOT_SETTLE_MINUTES: '0',
+      RELEASE_BOT_SETTLE_MINUTES: '0.5',
       RELEASE_BOT_REPOSITORIES: ' CyclopsCore, EvilCraft ,',
       RELEASE_BOT_SKIP_PR_AUTHORS: 'a,b',
       RELEASE_BOT_LABEL: 'shipped',
       RELEASE_BOT_MAX_COMMENTS: '5',
       RELEASE_BOT_CI_WORKFLOW: 'build.yml',
-      RELEASE_BOT_COMMENT_DELAY: '0.5',
     }, now)).toEqual({
       token: 'token',
       organization: 'Org',
@@ -63,13 +61,12 @@ describe('getEnvironmentOptions', () => {
       now,
       notBefore: new Date('2026-11-16T00:00:00Z'),
       lookbackDays: 7,
-      settleMinutes: 0,
+      settleMinutes: 0.5,
       repositories: [ 'CyclopsCore', 'EvilCraft' ],
       skipPullRequestAuthors: [ 'a', 'b' ],
       label: { name: 'shipped', color: '0e8a16', description: 'Included in a published release' },
       maxComments: 5,
       ciWorkflow: 'build.yml',
-      commentDelay: 0.5,
     });
   });
 

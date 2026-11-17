@@ -136,7 +136,6 @@ class FakeGitHubClient implements IGitHubClient {
 describe('ReleaseBot', () => {
   let client: FakeGitHubClient;
   let options: IReleaseBotOptions;
-  let sleep: jest.Mock;
   let logger: jest.Mock;
 
   function createBot(overrides: Partial<IReleaseBotOptions> = {}): ReleaseBot {
@@ -148,7 +147,6 @@ describe('ReleaseBot', () => {
   }
 
   beforeEach(() => {
-    sleep = jest.fn(async() => {});
     logger = jest.fn();
     client = new FakeGitHubClient();
     options = {
@@ -163,8 +161,6 @@ describe('ReleaseBot', () => {
       label: { name: 'released', color: '0e8a16', description: 'Included in a published release' },
       maxComments: 50,
       ciWorkflow: 'ci.yml',
-      commentDelay: 1_000,
-      sleep,
       logger,
     };
 
@@ -235,8 +231,6 @@ Download Cyclops Core from [CurseForge](https://www.curseforge.com/minecraft/mc-
         'cyclopsmc/cyclopscore#258 released',
         'cyclopsmc/cyclopscore#261 released',
       ]);
-      expect(sleep).toHaveBeenCalledTimes(1);
-      expect(sleep).toHaveBeenCalledWith(1_000);
       expect(logger).toHaveBeenCalledWith('Added comment to CyclopsMC/CyclopsCore#258');
       expect(client.getFileContents).toHaveBeenCalledWith(CORE, 'gradle.properties');
       expect(client.getFileContents.mock.calls.filter(([ , path ]) => path === 'gradle.properties')).toHaveLength(1);

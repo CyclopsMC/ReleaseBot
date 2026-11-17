@@ -3,7 +3,7 @@ import type { IReleaseBotOptions } from './ReleaseBot';
 /**
  * The release bot options that can be configured via environment variables.
  */
-export type IEnvironmentOptions = Omit<IReleaseBotOptions, 'client' | 'sleep' | 'logger'> & { token: string };
+export type IEnvironmentOptions = Omit<IReleaseBotOptions, 'client' | 'logger'> & { token: string };
 
 /**
  * Determine the release bot options from environment variables.
@@ -36,7 +36,6 @@ export function getEnvironmentOptions(env: Record<string, string | undefined>, n
     },
     maxComments: parseNumber('RELEASE_BOT_MAX_COMMENTS', get('RELEASE_BOT_MAX_COMMENTS'), 50),
     ciWorkflow: get('RELEASE_BOT_CI_WORKFLOW') ?? 'ci.yml',
-    commentDelay: parseNumber('RELEASE_BOT_COMMENT_DELAY', get('RELEASE_BOT_COMMENT_DELAY'), 1_000),
   };
 }
 

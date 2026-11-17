@@ -244,7 +244,6 @@ export class ReleaseBot {
         if (action.comment) {
           await this.options.client.addComment(action.item, action.comment);
           this.options.logger(`Added comment to ${name}`);
-          await this.options.sleep(this.options.commentDelay);
         }
       } catch (error: unknown) {
         this.addError(report, `Failed to update ${name}`, error);
@@ -308,14 +307,6 @@ export interface IReleaseBotOptions {
    * The file name of the workflow that must succeed for a release before it is handled.
    */
   ciWorkflow: string;
-  /**
-   * The number of milliseconds to wait after each comment.
-   */
-  commentDelay: number;
-  /**
-   * Function to wait for the given number of milliseconds.
-   */
-  sleep: (ms: number) => Promise<void>;
   /**
    * Function to log progress messages.
    */

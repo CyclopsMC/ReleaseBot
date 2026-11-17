@@ -17,7 +17,7 @@
   },
   "typings": "index",
   "engines": {
-    "node": ">=22"
+    "node": ">=22.12"
   },
   "scripts": {
     "test": "jest ${1}",
@@ -33,16 +33,6 @@
     "lint",
     "test"
   ],
-  "devDependencies": {
-    "@rubensworks/eslint-config": "^3.0.0",
-    "@types/jest": "^30.0.0",
-    "@types/node": "^22.0.0",
-    "eslint": "^8.56.0",
-    "jest": "^30.0.0",
-    "pre-commit": "^2.0.0",
-    "ts-jest": "^29.0.0",
-    "typescript": "^6.0.0"
-  },
   "jest": {
     "transform": {
       "^.+\\.ts$": "ts-jest"
@@ -64,5 +54,19 @@
         "statements": 100
       }
     }
+  },
+  "dependencies": {
+    "@octokit/plugin-throttling": "^11.0.0",
+    "@octokit/rest": "^22.0.0"
+  },
+  "devDependencies": {
+    "@rubensworks/eslint-config": "^3.0.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^22.0.0",
+    "eslint": "^8.56.0",
+    "jest": "^30.0.0",
+    "pre-commit": "^2.0.0",
+    "ts-jest": "^29.0.0",
+    "typescript": "^6.0.0"
   }
 }
