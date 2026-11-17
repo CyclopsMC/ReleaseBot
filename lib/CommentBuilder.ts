@@ -54,7 +54,7 @@ export class CommentBuilder {
     const sorted = [ ...releases ].sort((left, right) => left.mod.name.localeCompare(right.mod.name) ||
       CommentBuilder.compareVersions(right.minecraftVersion ?? '', left.minecraftVersion ?? ''));
     const lines = [
-      `This is included in the following ${sorted.length === 1 ? 'release' : 'releases'}:`,
+      `🎉 This is included in the following ${sorted.length === 1 ? 'release' : 'releases'}:`,
       '',
       ...sorted.map(release => `* [${release.mod.name} ${release.tag}](${release.url})${release.minecraftVersion ?
         ` for Minecraft ${release.minecraftVersion}` :
@@ -76,7 +76,7 @@ export class CommentBuilder {
         ...release.mod.modrinthUrl ? [ `[Modrinth](${release.mod.modrinthUrl})` ] : [],
       ];
       if (downloads.length > 0) {
-        paragraph.push(`Download ${release.mod.name} from ${downloads.join(' or ')}.`);
+        paragraph.push(`⬇️ Download ${release.mod.name} from ${downloads.join(' or ')}.`);
       }
       if (paragraph.length > 0) {
         lines.push('', ...paragraph);

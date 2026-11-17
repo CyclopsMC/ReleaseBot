@@ -30,11 +30,11 @@ describe('CommentBuilder', () => {
 
   describe('build', () => {
     it('should announce a single release', () => {
-      expect(builder.build(coreIssue, [ coreRelease('26.1.2-1.31.5', '26.1.2') ])).toBe(`This is included in the following release:
+      expect(builder.build(coreIssue, [ coreRelease('26.1.2-1.31.5', '26.1.2') ])).toBe(`🎉 This is included in the following release:
 
 * [Cyclops Core 26.1.2-1.31.5](https://github.com/CyclopsMC/CyclopsCore/releases/tag/26.1.2-1.31.5) for Minecraft 26.1.2
 
-Download Cyclops Core from [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cyclops-core) or [Modrinth](https://modrinth.com/mod/Z9DM0LJ4).
+⬇️ Download Cyclops Core from [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cyclops-core) or [Modrinth](https://modrinth.com/mod/Z9DM0LJ4).
 
 <!-- release-bot: CyclopsMC/CyclopsCore@26.1.2-1.31.5 -->
 `);
@@ -45,13 +45,13 @@ Download Cyclops Core from [CurseForge](https://www.curseforge.com/minecraft/mc-
         coreRelease('1.20.1-1.22.5', '1.20.1'),
         coreRelease('26.1.2-1.31.5', '26.1.2'),
         coreRelease('1.21.1-1.30.2', '1.21.1'),
-      ])).toBe(`This is included in the following releases:
+      ])).toBe(`🎉 This is included in the following releases:
 
 * [Cyclops Core 26.1.2-1.31.5](https://github.com/CyclopsMC/CyclopsCore/releases/tag/26.1.2-1.31.5) for Minecraft 26.1.2
 * [Cyclops Core 1.21.1-1.30.2](https://github.com/CyclopsMC/CyclopsCore/releases/tag/1.21.1-1.30.2) for Minecraft 1.21.1
 * [Cyclops Core 1.20.1-1.22.5](https://github.com/CyclopsMC/CyclopsCore/releases/tag/1.20.1-1.22.5) for Minecraft 1.20.1
 
-Download Cyclops Core from [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cyclops-core) or [Modrinth](https://modrinth.com/mod/Z9DM0LJ4).
+⬇️ Download Cyclops Core from [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cyclops-core) or [Modrinth](https://modrinth.com/mod/Z9DM0LJ4).
 
 <!-- release-bot: CyclopsMC/CyclopsCore@26.1.2-1.31.5 CyclopsMC/CyclopsCore@1.21.1-1.30.2 CyclopsMC/CyclopsCore@1.20.1-1.22.5 -->
 `);
@@ -59,12 +59,12 @@ Download Cyclops Core from [CurseForge](https://www.curseforge.com/minecraft/mc-
 
     it('should mention that a release of another mod must be updated', () => {
       expect(builder.build({ repository: EVILCRAFT, number: 1239 }, [ coreRelease('26.1.2-1.30.2', '26.1.2') ]))
-        .toBe(`This is included in the following release:
+        .toBe(`🎉 This is included in the following release:
 
 * [Cyclops Core 26.1.2-1.30.2](https://github.com/CyclopsMC/CyclopsCore/releases/tag/26.1.2-1.30.2) for Minecraft 26.1.2
 
 This change is part of Cyclops Core, so make sure to update that mod.
-Download Cyclops Core from [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cyclops-core) or [Modrinth](https://modrinth.com/mod/Z9DM0LJ4).
+⬇️ Download Cyclops Core from [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cyclops-core) or [Modrinth](https://modrinth.com/mod/Z9DM0LJ4).
 
 <!-- release-bot: CyclopsMC/CyclopsCore@26.1.2-1.30.2 -->
 `);
@@ -74,7 +74,7 @@ Download Cyclops Core from [CurseForge](https://www.curseforge.com/minecraft/mc-
       expect(builder.build({ repository: EVILCRAFT, number: 1 }, [
         { repository: EVILCRAFT, tag: 'v2', url: 'https://example.org/v2', mod: { name: 'EvilCraft' }},
         { repository: CORE, tag: 'v1', url: 'https://example.org/v1', mod: { name: 'Cyclops Core' }},
-      ])).toBe(`This is included in the following releases:
+      ])).toBe(`🎉 This is included in the following releases:
 
 * [Cyclops Core v1](https://example.org/v1)
 * [EvilCraft v2](https://example.org/v2)
@@ -89,7 +89,7 @@ This change is part of Cyclops Core, so make sure to update that mod.
       expect(builder.build(coreIssue, [{
         ...coreRelease('26.1.2-1.31.5', '26.1.2'),
         mod: { name: 'Cyclops Core', modrinthUrl: 'https://modrinth.com/mod/Z9DM0LJ4' },
-      }])).toContain('Download Cyclops Core from [Modrinth](https://modrinth.com/mod/Z9DM0LJ4).');
+      }])).toContain('⬇️ Download Cyclops Core from [Modrinth](https://modrinth.com/mod/Z9DM0LJ4).');
     });
   });
 

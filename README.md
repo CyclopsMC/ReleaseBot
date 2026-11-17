@@ -16,13 +16,13 @@ Concretely, for each new release, it does the following:
 For example, an issue that was fixed for three Minecraft versions receives the following comment:
 
 ```markdown
-This is included in the following releases:
+🎉 This is included in the following releases:
 
 * [Cyclops Core 26.1.2-1.31.5](https://github.com/CyclopsMC/CyclopsCore/releases/tag/26.1.2-1.31.5) for Minecraft 26.1.2
 * [Cyclops Core 1.21.1-1.30.2](https://github.com/CyclopsMC/CyclopsCore/releases/tag/1.21.1-1.30.2) for Minecraft 1.21.1
 * [Cyclops Core 1.20.1-1.22.5](https://github.com/CyclopsMC/CyclopsCore/releases/tag/1.20.1-1.22.5) for Minecraft 1.20.1
 
-Download Cyclops Core from [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cyclops-core) or [Modrinth](https://modrinth.com/mod/Z9DM0LJ4).
+⬇️ Download Cyclops Core from [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cyclops-core) or [Modrinth](https://modrinth.com/mod/Z9DM0LJ4).
 
 <!-- release-bot: CyclopsMC/CyclopsCore@26.1.2-1.31.5 CyclopsMC/CyclopsCore@1.21.1-1.30.2 CyclopsMC/CyclopsCore@1.20.1-1.22.5 -->
 ```
